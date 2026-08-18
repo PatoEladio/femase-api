@@ -14,6 +14,7 @@ import { User } from 'src/users/user.entity';
 import { RegistroEvento } from 'src/registro_evento/entities/registro_evento.entity';
 import { RegistroConexione } from 'src/registro_conexiones/entities/registro_conexione.entity';
 import { Empresa } from 'src/empresas/empresas.entity';
+import { AutorizaHorasExtra } from 'src/autoriza_horas_extras/entities/autoriza_horas_extra.entity';
 const UAParser = require('ua-parser-js');
 
 @Injectable()
@@ -36,6 +37,8 @@ export class ReportesService {
     private readonly empresaRepository: Repository<Empresa>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(AutorizaHorasExtra)
+    private readonly autorizaHorasExtraRepository: Repository<AutorizaHorasExtra>,
     private readonly detalleAsistenciaService: DetalleAsistenciaService,
   ) { }
 
@@ -269,6 +272,22 @@ export class ReportesService {
         }
       }
 
+      const autorizadas = await this.autorizaHorasExtraRepository.find({
+        where: {
+          empleado: { num_ficha: numFicha },
+          estado: 'A',
+          fecha_marca: Between(new Date(fechaInicio), new Date(fechaFin))
+        }
+      });
+
+      let totalExtraAprobadasMs = 0;
+      for (const auth of autorizadas) {
+        if (auth.horas_extras) {
+          totalExtraAprobadasMs += parseMs(auth.horas_extras);
+        }
+      }
+      const horasExtrasAprobadasStr = formatMs(totalExtraAprobadasMs);
+
       contentArr.push(
         {
           columns: [
@@ -285,7 +304,7 @@ export class ReportesService {
           }
         },
         {
-          text: `Resumen:\nTotal dias trabajados: ${totalDiasTrabajados}\nTotal Días Ausente: ${totalDiasAusente}\nTotal Días Descanso: ${totalDiasDescanso}\nTotal Días Feriado: ${totalDiasFeriado}\nHoras Extras aprobadas: Esto lo veré mas tarde pero agrega el texto`,
+          text: `Resumen:\nTotal dias trabajados: ${totalDiasTrabajados}\nTotal Días Ausente: ${totalDiasAusente}\nTotal Días Descanso: ${totalDiasDescanso}\nTotal Días Feriado: ${totalDiasFeriado}\nHoras Extras aprobadas: ${horasExtrasAprobadasStr}`,
           margin: [0, 10, 0, 10],
           fontSize: 8,
           bold: true

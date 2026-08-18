@@ -13,10 +13,11 @@ import { DetalleAsistencia } from '../detalle-asistencia/entities/detalle-asiste
 import { AuditoriaTurno } from '../detalle-turno/entities/auditoria-turno.entity';
 import { RegistroConexione } from '../registro_conexiones/entities/registro_conexione.entity';
 import { Empresa } from '../empresas/empresas.entity';
+import { AutorizaHorasExtra } from '../autoriza_horas_extras/entities/autoriza_horas_extra.entity';
 import { User } from '../users/user.entity';
 
 @Module({
-  imports: [MarcasModule, EmpleadoModule, DetalleAsistenciaModule, TypeOrmModule.forFeature([Empleado, Feriado, Vacaciones, Ausencia, DetalleAsistencia, AuditoriaTurno, RegistroConexione, Empresa, User])],
+  imports: [MarcasModule, EmpleadoModule, DetalleAsistenciaModule, TypeOrmModule.forFeature([Empleado, Feriado, Vacaciones, Ausencia, DetalleAsistencia, AuditoriaTurno, RegistroConexione, Empresa, User, AutorizaHorasExtra])],
   controllers: [ReportesController],
   providers: [ReportesService],
 })
