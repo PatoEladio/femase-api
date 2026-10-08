@@ -13,6 +13,7 @@ import { Teletrabajo } from "src/teletrabajo/entities/teletrabajo.entity";
 import { Turno } from "src/turno/entities/turno.entity";
 import { User } from "src/users/user.entity";
 import { Vacaciones } from "src/vacaciones/entities/vacaciones.entity";
+import { VacacionesProgresivas } from "src/vacaciones-progresivas/entities/vacaciones-progresivas.entity";
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'empleado', schema: 'db_fmc' })
@@ -131,6 +132,9 @@ export class Empleado {
 
   @OneToMany(() => Vacaciones, (vacaciones) => vacaciones.empleado)
   vacaciones: Vacaciones[];
+
+  @OneToMany(() => VacacionesProgresivas, (vp) => vp.empleado)
+  vacaciones_progresivas: VacacionesProgresivas[];
 
   @OneToMany(() => Ausencia, (ausencia) => ausencia.num_ficha)
   ausencias: Ausencia[];

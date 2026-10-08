@@ -46,6 +46,7 @@ import { HorasCompensacionModule } from './horas_compensacion/horas_compensacion
 import { SolicitudHorasCompensacionModule } from './solicitud_horas_compensacion/solicitud_horas_compensacion.module';
 import { HuellasModule } from './huellas/huellas.module';
 import { TareasHuellasModule } from './tareas-huellas/tareas-huellas.module';
+import { VacacionesProgresivasModule } from './vacaciones-progresivas/vacaciones-progresivas.module';
 
 import { User } from './users/user.entity';
 import { Perfil } from './perfiles/perfil.entity';
@@ -90,6 +91,7 @@ import { HorasCompensacion } from './horas_compensacion/entities/horas_compensac
 import { SolicitudHorasCompensacion } from './solicitud_horas_compensacion/entities/solicitud_horas_compensacion.entity';
 import { Huella } from './huellas/entities/huella.entity';
 import { TareaHuella } from './tareas-huellas/entities/tarea-huella.entity';
+import { VacacionesProgresivas } from './vacaciones-progresivas/entities/vacaciones-progresivas.entity';
 
 import { PerfilesService } from './perfiles/perfiles.service';
 import { PerfilesController } from './perfiles/perfiles.controller';
@@ -156,7 +158,8 @@ import { AppController } from './app.controller';
         HorasCompensacion,
         SolicitudHorasCompensacion,
         Huella,
-        TareaHuella
+        TareaHuella,
+        VacacionesProgresivas,
       ]
     }),
     MailerModule.forRoot({
@@ -217,7 +220,8 @@ import { AppController } from './app.controller';
     HorasCompensacionModule,
     SolicitudHorasCompensacionModule,
     HuellasModule,
-    TareasHuellasModule
+    TareasHuellasModule,
+    VacacionesProgresivasModule,
   ],
   providers: [PerfilesService],
   controllers: [PerfilesController, AppController],
